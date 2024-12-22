@@ -37,7 +37,7 @@
                         <tbody>
                             @forelse ($kategoris as $kategori)
                                 <tr>
-                                    <td class="fw-bold text-capitalize">{{ $kategori->nama_kategori }}</td>
+                                    <td class=" text-capitalize">{{ $kategori->nama_kategori }}</td>
                                     <td>
                                         <form action="{{ route('kategori.destroy', $kategori->id_kategori) }}" method="POST" style="display:inline;">
                                             @csrf

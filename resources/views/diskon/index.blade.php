@@ -23,7 +23,7 @@
                 <table class="table table-bordered table-striped align-middle text-center">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 5%">#</th>
+                            <th style="width: 5%">No</th>
                             <th>Nama Diskon</th>
                             <th>Persentase</th>
                             <th>Nominal</th>

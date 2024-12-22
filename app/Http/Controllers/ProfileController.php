@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -19,17 +20,28 @@ class ProfileController extends Controller
     // Update Profile
     public function update(Request $request)
     {
-        $request->validate([
+        // Validasi input
+        $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . Auth::user(),
+            'email' => 'required|email|max:255',
         ]);
-
-        Auth::user()->id_user;
-        $user->nama = $request->nama;
-        $user->email = $request->email;
+    
+        // Perbarui pengguna
+        $user = auth()->users(); // Mendapatkan pengguna yang sedang login
+        $user->nama = $validated['nama'];
+        $user->email = $validated['email'];
         $user->save();
+    
+        // Update session jika perlu
+        DB::table('sessions')
+            ->where('id', session()->getId())
+            ->update(['id_user' => auth()->id()]);
 
-        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+        // Logout dan login ulang setelah perubahan
+        auth()->logout();
+        auth()->login($user);
+    
+        return redirect()->route('profile.show');
     }
 
     // Update Password
@@ -40,7 +52,8 @@ class ProfileController extends Controller
             'new_password' => 'required|min:8|confirmed',
         ]);
 
-        Auth::user()->id_user;
+        // Ambil data user yang sedang login
+        $user = Auth::user();
 
         if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Password lama salah.']);

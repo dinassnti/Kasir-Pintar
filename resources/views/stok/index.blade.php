@@ -28,7 +28,7 @@
                         <tr>
                             <th style="width: 5%">No</th>
                             <th>Nama Produk</th>
-                            <th style="width: 10%">Stok</th>
+                            <th style="width: 20%">Stok</th>
                             <th style="width: 20%">Aksi</th>
                         </tr>
                     </thead>

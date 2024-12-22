@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
@@ -64,7 +65,10 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => ['auth', 'update_session_user']], function () {
     // Rute yang dilindungi login
 });
-
+//Data Staff
+Route::middleware(['auth'])->group(function () {
+    Route::resource('data_staff', DataStaffController::class);
+});
 //Produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
 Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])->name('produk.edit');

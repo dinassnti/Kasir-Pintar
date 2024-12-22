@@ -152,29 +152,32 @@
 <body>
     <!-- Main Content -->
     <div id="content">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-soft">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{ route('profile.show') }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-circle">
-                        Nama User
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    </nav>
-
-    <!-- Logout Form -->
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-soft">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->nama }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Logout Form -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
 
         <!-- Sidebar -->
         <nav id="sidebarMenu" class="sidebar">
@@ -201,80 +204,99 @@
                         </div>
                     </a>
                 </li>
-                <!-- Produk Link -->
+                <!-- Kelola Produk (Dropdown) -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('produk.index') ? 'active' : '' }}" href="{{ route('produk.index') }}">
+                    <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#kelolaProdukMenu" role="button" aria-expanded="false" aria-controls="kelolaProdukMenu" data-bs-auto-close="outside">
                         <div class="nav-box">
-                            <i data-feather="box"></i>
-                            <span class="nav-text">Produk</span>
+                            <i data-feather="package"></i>
+                            <span class="nav-text">Kelola Produk</span>
                         </div>
+                        <i data-feather="chevron-down"></i>
                     </a>
-                </li>
-                <!-- Kategori Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('kategori.index') ? 'active' : '' }}" href="{{ route('kategori.index') }}">
-                        <div class="nav-box">
-                            <i data-feather="grid"></i>
-                            <span class="nav-text">Kategori</span>
-                        </div>
-                    </a>
-                </li>
-                <!-- Manajemen Stok Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}" href="{{ route('stok.index') }}">
-                        <div class="nav-box">
-                            <i data-feather="layers"></i>
-                            <span class="nav-text">Manajemen Stok</span>
-                        </div>
-                    </a>
-                </li>
-                <!-- Diskon Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('diskon.index') ? 'active' : '' }}" href="{{ route('diskon.index') }}">
-                        <div class="nav-box">
-                            <i data-feather="percent"></i>
-                            <span class="nav-text">Diskon</span>
-                        </div>
-                    </a>
-                </li>
-                <!-- Pelanggan Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}" href="{{ route('pelanggan.index') }}">
-                        <div class="nav-box">
-                            <i class="bi bi-people-fill"></i>
-                            <span class="nav-text">Pelanggan</span>
-                        </div>
-                    </a>
-                </li>
-                <!-- Transaksi Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('transaksi.index') ? 'active' : '' }}" href="{{ route('transaksi.index') }}">
-                        <div class="nav-box">
-                            <i data-feather="file-text"></i>
-                            <span class="nav-text">Transaksi</span>
-                        </div>
-                    </a>
-                </li>
-                <!-- Laporan Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}" href="{{ route('laporan.index') }}">
-                        <div class="nav-box">
-                            <i data-feather="bar-chart"></i>
-                            <span class="nav-text">Laporan</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-
-            <div class="sidebar-footer">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-light">
-                        <i data-feather="log-out"></i> Logout
-                    </button>
-                </form>
+                    <div class="collapse" id="kelolaProdukMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('produk.index') ? 'active' : '' }}" href="{{ route('produk.index') }}">
+                                    <div class="nav-box">
+                                        <i data-feather="box"></i>
+                                        <span class="nav-text">Produk</span>
+                                    </div>
+                                </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('kategori.index') ? 'active' : '' }}" href="{{ route('kategori.index') }}">
+                            <div class="nav-box">
+                                <i data-feather="grid"></i>
+                                <span class="nav-text">Kategori</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}" href="{{ route('stok.index') }}">
+                            <div class="nav-box">
+                                <i data-feather="layers"></i>
+                                <span class="nav-text">Manajemen Stok</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('diskon.index') ? 'active' : '' }}" href="{{ route('diskon.index') }}">
+                            <div class="nav-box">
+                                <i data-feather="percent"></i>
+                                <span class="nav-text">Diskon</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </li>
+                <!-- Data Staff Link -->
+                <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('data_staff.index') ? 'active' : '' }}" href="{{ route('data_staff.index') }}">
+                <div class="nav-box">
+                    <i data-feather="users"></i>
+                    <span class="nav-text">Data Staff</span>
+                </div>
+            </a>
+        </li>
+        <!-- Pelanggan Link -->
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}" href="{{ route('pelanggan.index') }}">
+                <div class="nav-box">
+                    <i class="bi bi-people-fill"></i>
+                    <span class="nav-text">Pelanggan</span>
+                </div>
+            </a>
+        </li>
+        <!-- Transaksi Link -->
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('transaksi.index') ? 'active' : '' }}" href="{{ route('transaksi.index') }}">
+                <div class="nav-box">
+                    <i data-feather="file-text"></i>
+                    <span class="nav-text">Transaksi</span>
+                </div>
+            </a>
+        </li>
+        <!-- Laporan Link -->
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}" href="{{ route('laporan.index') }}">
+                <div class="nav-box">
+                    <i data-feather="bar-chart"></i>
+                    <span class="nav-text">Laporan</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-light">
+                <i data-feather="log-out"></i> Logout
+            </button>
+        </form>
+    </div>
+</nav>
 
         <!-- Main Content -->
         <main>
@@ -283,6 +305,7 @@
     </div>
 
     <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         feather.replace();
     </script>

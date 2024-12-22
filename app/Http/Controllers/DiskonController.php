@@ -27,7 +27,7 @@ class DiskonController extends Controller
             'nama_diskon' => 'required|max:50',
             'persentase' => 'nullable|numeric|min:0|max:100',
             'nominal' => 'nullable|numeric|min:0',
-            'tanggal_mulai' => 'required|date',
+            'tanggal_mulai' => 'required|date|before_or_equal:tanggal_berakhir',
             'tanggal_berakhir' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
 
@@ -50,7 +50,7 @@ class DiskonController extends Controller
             'nama_diskon' => 'required|max:50',
             'persentase' => 'nullable|numeric|min:0|max:100',
             'nominal' => 'nullable|numeric|min:0',
-            'tanggal_mulai' => 'required|date',
+            'tanggal_mulai' => 'required|date|before_or_equal:tanggal_berakhir',
             'tanggal_berakhir' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
 

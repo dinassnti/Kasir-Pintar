@@ -4,18 +4,15 @@
 
 @section('content')
 <div class="container mt-4">
-    <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-primary">Tambah Diskon</h1>
     </div>
 
-    <!-- Form Section -->
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">Form Tambah Diskon</h4>
         </div>
         <div class="card-body">
-            <!-- Form to Add Discount -->
             <form action="{{ route('diskon.store') }}" method="POST">
                 @csrf
 
@@ -28,19 +25,32 @@
                     @enderror
                 </div>
 
-                <!-- Persentase -->
+                <!-- Pilih Jenis Diskon -->
                 <div class="mb-3">
-                    <label for="persentase" class="form-label">Persentase</label>
-                    <input type="number" class="form-control @error('persentase') is-invalid @enderror" id="persentase" name="persentase" value="{{ old('persentase') }}" step="0.01">
+                    <label for="jenis_diskon" class="form-label">Jenis Diskon</label>
+                    <select class="form-select @error('jenis_diskon') is-invalid @enderror" id="jenis_diskon" name="jenis_diskon" onchange="toggleDiskonInput()" required>
+                        <option value="" disabled selected>Pilih Jenis Diskon</option>
+                        <option value="persentase" {{ old('jenis_diskon') == 'persentase' ? 'selected' : '' }}>Persentase</option>
+                        <option value="nominal" {{ old('jenis_diskon') == 'nominal' ? 'selected' : '' }}>Nominal</option>
+                    </select>
+                    @error('jenis_diskon')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Input Persentase -->
+                <div class="mb-3 hidden" id="persentase_field">
+                    <label for="persentase" class="form-label">Persentase (%)</label>
+                    <input type="number" class="form-control @error('persentase') is-invalid @enderror" id="persentase" name="persentase" value="{{ old('persentase') }}" step="0.01" min="0" max="100" placeholder="Masukkan persentase diskon">
                     @error('persentase')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Nominal -->
-                <div class="mb-3">
-                    <label for="nominal" class="form-label">Nominal</label>
-                    <input type="number" class="form-control @error('nominal') is-invalid @enderror" id="nominal" name="nominal" value="{{ old('nominal') }}" step="0.01">
+                <!-- Input Nominal -->
+                <div class="mb-3 hidden" id="nominal_field">
+                    <label for="nominal" class="form-label">Nominal (Rp)</label>
+                    <input type="number" class="form-control @error('nominal') is-invalid @enderror" id="nominal" name="nominal" value="{{ old('nominal') }}" step="0.01" min="0" placeholder="Masukkan nominal diskon">
                     @error('nominal')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -64,14 +74,34 @@
                     @enderror
                 </div>
 
-                <!-- Submit Button -->
+                <!-- Submit -->
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save"></i> Simpan Diskon
-                    </button>
+                    <button type="submit" class="btn btn-primary">Simpan Diskon</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Script untuk toggle field diskon -->
+<script>
+    function toggleDiskonInput() {
+        const jenisDiskon = document.getElementById('jenis_diskon').value;
+        const persentaseField = document.getElementById('persentase_field');
+        const nominalField = document.getElementById('nominal_field');
+
+        persentaseField.classList.toggle('hidden', jenisDiskon !== 'persentase');
+        nominalField.classList.toggle('hidden', jenisDiskon !== 'nominal');
+    }
+
+    // Mengatur kondisi saat halaman reload
+    document.addEventListener('DOMContentLoaded', toggleDiskonInput);
+</script>
+
+<!-- Styling CSS untuk menyembunyikan elemen -->
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 @endsection
