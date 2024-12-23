@@ -195,15 +195,24 @@
                     </div>
                 </a>
             </li>
-                <!-- Dashboard Link -->
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                        <div class="nav-box">
-                            <i data-feather="home"></i>
-                            <span class="nav-text">Dashboard</span>
-                        </div>
-                    </a>
-                </li>
+            <!-- Toko Link -->
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('toko.edit') ? 'active' : '' }}" href="{{ route('toko.edit') }}">
+                    <div class="nav-box">
+                        <i data-feather="globe"></i> 
+                        <span class="nav-text">Toko</span>
+                    </div>
+                </a>
+            </li>
+            <!-- Dashboard Link -->
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                    <div class="nav-box">
+                        <i data-feather="home"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </div>
+                </a>
+            </li>
                 <!-- Kelola Produk (Dropdown) -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#kelolaProdukMenu" role="button" aria-expanded="false" aria-controls="kelolaProdukMenu" data-bs-auto-close="outside">
@@ -250,8 +259,8 @@
                 </ul>
             </div>
         </li>
-                <!-- Data Staff Link -->
-                <li class="nav-item">
+        <!-- Data Staff Link -->
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('data_staff.index') ? 'active' : '' }}" href="{{ route('data_staff.index') }}">
                 <div class="nav-box">
                     <i data-feather="users"></i>

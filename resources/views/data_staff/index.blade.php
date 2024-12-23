@@ -7,10 +7,19 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-primary">Data Staff</h1>
-        <!-- Add Staff Button -->
+
+        <div class="mt-2">
         <a href="{{ route('data_staff.create') }}" class="btn btn-success shadow-sm">
             <i class="bi bi-plus-circle"></i> Tambah Staff
         </a>
+        </div>
+        <!-- Search Form -->
+        <form action="{{ route('data_staff.index') }}" method="GET" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Cari staff..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary shadow-sm">
+                <i class="bi bi-search"></i> Cari
+            </button>
+        </form>
     </div>
 
     <!-- Table Section -->

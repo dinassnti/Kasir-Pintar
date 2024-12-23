@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('sessions', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_user')->nullable()->after('id');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-        });
+        if (!Schema::hasColumn('sessions', 'id_user')) {
+            Schema::table('sessions', function (Blueprint $table) {
+                $table->unsignedBigInteger('id_user')->nullable()->after('id');
+            });
+        }
     }
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down()
     {
         Schema::table('sessions', function (Blueprint $table) {

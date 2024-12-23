@@ -57,22 +57,26 @@ class DataStaffController extends Controller
 
     public function update(Request $request, $id_data_staff)
     {
+        // Cari data staff berdasarkan primary key (id_data_staff)
         $staff = DataStaff::findOrFail($id_data_staff);
-
+    
+        // Validasi input
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
-            'email' => 'required|email|unique:data_staff,email,' . $staff->id_data_staff, 
+            'email' => 'required|email|unique:data_staff,email,' . $id_data_staff . ',id_data_staff',
             'no_telepon' => 'required|string|max:15',
             'level_akses' => 'required|in:Kasir',
             'alamat' => 'required|string',
         ]);
-
+    
+        // Update data staff
         $staff->update($validated);
+    
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('data_staff.index')->with('success', 'Data staff berhasil diperbarui.');
+    }    
 
-        return redirect()->route('data_staff.index');
-    }
-
-    public function destroy($id_data_staff)
+    public function destroy($id)
     {
         $staff = DataStaff::findOrFail($id_data_staff);
         $staff->delete();

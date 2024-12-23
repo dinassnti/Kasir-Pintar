@@ -43,7 +43,7 @@
 
         <!-- Posisi -->
         <div class="mb-3">
-            <label for="posisi" class="form-label">Posisi</label>
+            <label for="posisi" class="form-label">Pilih Level Akses</label>
             <select name="posisi" id="posisi" class="form-control shadow-sm @error('posisi') is-invalid @enderror" required>
                 <option value="">Pilih Level Akses</option>
                 <option value="kasir" {{ old('level_akses', $staff->posisi) === 'kasir' ? 'selected' : '' }}>Kasir</option>

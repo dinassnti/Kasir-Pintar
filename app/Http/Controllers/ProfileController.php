@@ -27,7 +27,7 @@ class ProfileController extends Controller
         ]);
     
         // Perbarui pengguna
-        $user = auth()->users(); // Mendapatkan pengguna yang sedang login
+        $user = auth()->user(); // Mendapatkan pengguna yang sedang login
         $user->nama = $validated['nama'];
         $user->email = $validated['email'];
         $user->save();

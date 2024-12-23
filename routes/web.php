@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\DataStaffController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\StokController;
+use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\DiskonController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TokoController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Models\Kategori;
 use App\Models\Produk;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -65,10 +66,17 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => ['auth', 'update_session_user']], function () {
     // Rute yang dilindungi login
 });
-//Data Staff
-Route::middleware(['auth'])->group(function () {
-    Route::resource('data_staff', DataStaffController::class);
+//Toko
+Route::middleware('auth')->group(function () {
+    Route::get('/toko/edit', function () {
+        return redirect()->route('toko.show');
+    })->name('toko.edit');
+    Route::get('/toko', [TokoController::class, 'show'])->name('toko.show');
+    Route::post('/toko/store', [TokoController::class, 'store'])->name('toko.store');
+    Route::post('/toko/update', [TokoController::class, 'update'])->name('toko.update');
 });
+//Data Staff
+Route::resource('data_staff', DataStaffController::class);
 //Produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
 Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
